@@ -1,0 +1,40 @@
+<div class="card o-hidden border-0 shadow-lg my-5">
+    <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="p-5">
+                    <div class="text-center">
+                        <h1 class="h4 text-gray-900 mb-4">Add/Edit Employee</h1>
+                    </div>
+                    <form class="user" (ngSubmit)="addEditEmployeeSubmit(addEditEmployee)" #addEditEmployee='ngForm'>
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-user" name='name'
+                                [(ngModel)]="addEditEmployeeFormData.name" placeholder="Name" #name='ngModel' required>
+                            <span class="text-danger"
+                                *ngIf="name.invalid && (addEditEmployee.submitted || name.dirty)">*Enter Name</span>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control form-control-user" name='age'
+                                    [(ngModel)]="addEditEmployeeFormData.age" placeholder="Age" #age='ngModel' required>
+                                <span class="text-danger"
+                                    *ngIf="age.invalid && (addEditEmployee.submitted || age.dirty)">*Enter Age</span>
+                            </div>
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                <input type="text" class="form-control form-control-user" name='salary'
+                                    [(ngModel)]="addEditEmployeeFormData.salary" placeholder="Salary" #salary='ngModel'
+                                    required>
+                                <span class="text-danger"
+                                    *ngIf="salary.invalid && (addEditEmployee.submitted || salary.dirty)">*Enter
+                                    Salary</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mr-2">Save</button>
+                        <button type="button" class="btn btn-danger" (click)="cancelAddEditEmployee()">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

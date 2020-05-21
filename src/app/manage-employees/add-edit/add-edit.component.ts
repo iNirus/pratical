@@ -16,7 +16,6 @@ export class AddEditComponent implements OnInit {
   employeeId: number;
   ngOnInit() {
     this.activeRoute.params.subscribe(params => {
-      console.log("this.employeeId = ", params)
       if (params['id']) {
         this.employeeId = params['id'];
         this.getEmployeeDetail();
@@ -27,7 +26,7 @@ export class AddEditComponent implements OnInit {
   addEditEmployeeSubmit(addEditEmployee: NgForm) {
     if (addEditEmployee.invalid)
       return false;
-      
+
     if (this.employeeId) {
       this._employeeService.updateEmployee(this.addEditEmployeeFormData, this.employeeId).subscribe((data: any) => {
         if (data.status == 'success') {
@@ -47,14 +46,25 @@ export class AddEditComponent implements OnInit {
   }
 
   getEmployeeDetail() {
-    this._employeeService.getEmployeeDetail(+this.employeeId).subscribe((data: any) => {
-      if (data.status == 'success') {
-        this.addEditEmployeeFormData.name = data.data.employee_name;
-        this.addEditEmployeeFormData.salary = data.data.employee_salary;
-        this.addEditEmployeeFormData.age = data.data.employee_age;
-      }
-    })
+    // this._employeeService.getEmployeeDetail(+this.employeeId).subscribe((data: any) => {
+    //   if (data.status == 'success') {
+    //     this.addEditEmployeeFormData.name = data.data.employee_name;
+    //     this.addEditEmployeeFormData.salary = data.data.employee_salary;
+    //     this.addEditEmployeeFormData.age = data.data.employee_age;
+    //   }
+    // })
 
+    let emloyeeList = JSON.parse(localStorage.getItem('employeeList'));
+    let emloyeeDetails: any = {};
+    if (emloyeeList.length > 0) {
+      let index = emloyeeList.findIndex(x => x.id == this.employeeId);
+      if (index > -1) {
+        emloyeeDetails = emloyeeList[index];
+        this.addEditEmployeeFormData.name = emloyeeDetails.employee_name;
+        this.addEditEmployeeFormData.salary = emloyeeDetails.employee_salary;
+        this.addEditEmployeeFormData.age = emloyeeDetails.employee_age;
+      }
+    }
   }
 
   cancelAddEditEmployee() {

@@ -17,23 +17,19 @@ export class ListComponent implements OnInit {
 
   getEmployeeList() {
     this._employeeService.getEmployeeList().subscribe((data: any) => {
-      console.log('List: ', data);
       this.employeeListData = data.data;
-      console.log('this.employeeListData: ', this.employeeListData);
+      localStorage.setItem('employeeList', JSON.stringify(this.employeeListData));
     })
   }
 
   editEmployee(data) {
-    console.log('Edit Employee = ', data)
     this.router.navigate(['/employee/edit', data.id]);
   }
 
   deleteEmployee(data) {
-    console.log('Delete Employee = ', data)
     if (data.id) {
       if (confirm('Are you sure you want to delete this record?')) {
         this._employeeService.deleteEmployee(data.id).subscribe((resData: any) => {
-          console.log('resData = ', resData)
           if (resData.status == 'success') {
             this.getEmployeeList();
             alert('Employee deleted successfully.');
@@ -44,5 +40,4 @@ export class ListComponent implements OnInit {
       }
     }
   }
-
 }
